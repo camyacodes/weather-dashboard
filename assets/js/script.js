@@ -5,9 +5,26 @@ var getCityCoord = function (city) {
 
 	fetch(apiUrl).then(function (response) {
 		response.json().then(function (data) {
-			console.log(data);
+      console.log(data);
+      getCurrentWeather(data.coord.lat, data.coord.lon)
+      
 		});
 	});
 };
 
-getCityCoord("london");
+getCityCoord("jacksonville");
+
+var getCurrentWeather = function (lat, lon) {
+  console.log(lat, lon);
+
+  var API_Key = "7944758690feb8acd835037db2bb2590";
+
+  var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_Key}`
+  
+  fetch(currentWeatherUrl).then(function (response) {
+		response.json().then(function (data) {
+      console.log(data);
+		});
+	});
+}
+
