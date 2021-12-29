@@ -34,6 +34,7 @@ var formSubmitHandler = function (event) {
 		// console.log(searchedCity);
 		getCityCoord(searchedCity);
 		recentSearches(searchedCity);
+		searchFormEl.reset()
 	}
 };
 
@@ -57,7 +58,7 @@ var getCurrentWeather = function (lat, lon) {
 };
 
 var displayCurrentWeather = function (current) {
-	console.log(current);
+	// console.log(current);
 
 	currentWeatherAttributesEl.textContent = "";
 
@@ -123,7 +124,7 @@ var displayCity = function (city) {
 };
 
 var displayForecastWeather = function (forecasts) {
-	console.log(forecasts);
+	// console.log(forecasts);
 
 	var forecastContainer = document.querySelector("#forecast-container");
 
@@ -187,25 +188,59 @@ var displayForecastWeather = function (forecasts) {
 };
 
 var recentSearches = function (searchedCity) {
-  
 	cityHistory.push(searchedCity);
 
 	cityHistory.splice(6);
+
 	localStorage.setItem("city", JSON.stringify(cityHistory));
 
-  var historyEl = document.querySelector("#history-container");
+	var historyEl = document.querySelector("#history-container");
 
-  historyEl.textContent = ""
-  
-  for (var i = 0; i < cityHistory.length; i++) {
+	historyEl.textContent = "";
 
-  var recentCity = document.createElement("button");
+	for (var i = 0; i < cityHistory.length; i++) {
 
-	recentCity.classList = "btn btn-primary w-100 mb-2";
+		var recentCity = document.createElement("input");
 
-	recentCity.textContent = cityHistory[i];
+		recentCity.classList = "btn btn-primary w-100 mb-2 recent-searches";
 
-	historyEl.appendChild(recentCity);
-  }
+		recentCity.type = "button";
 
+		recentCity.value = cityHistory[i];
+
+		historyEl.appendChild(recentCity);
+
+		var searchRecentCity = function (event) {
+
+			var btn = event.target
+			
+			console.log(btn.value)
+			getCityCoord(btn.value);
+		};
+
+		recentCity.addEventListener("click", searchRecentCity);
+
+		// recentCity.onclick = function () {
+		// 	// event.preventDefault();
+		// 	// get value from search bar
+
+		// 	var searchedRecent = recentCity.value;
+
+		// 	console.log(searchedRecent);
+		// 	getCityCoord(recentCity.value);
+		// };
+	}
+
+	
+	
 };
+
+// function searchHistory(searchedCity) {
+// 	cityHistory.push(searchedCity);
+// 	cityHistory.splice(4)
+// 	const maxHistoryLength = 5;
+// 	const isHistoryMaxed = cityHistory.length === maxHistoryLength;
+// 	const workingHistory = isHistoryMaxed ? cityHistory.slice(1) : cityHistory;
+
+// 	localStorage.setItem('cityHistory', JSON.stringify(workingHistory));
+//   }
