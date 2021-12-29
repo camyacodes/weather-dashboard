@@ -1,7 +1,11 @@
+//global variables
+
 var cityNameEl = document.querySelector("#cityName");
 var searchInputEl = document.querySelector("#citySearch");
 var searchFormEl = document.querySelector("#search-form");
 var currentWeatherAttributesEl = document.querySelector("#current-attributes");
+var cityHistory = JSON.parse(localStorage.getItem("cityHistory")) || [];
+
 var getCityCoord = function (city) {
 	var API_Key = "7944758690feb8acd835037db2bb2590";
 	// format the open weather api url
@@ -27,8 +31,9 @@ var formSubmitHandler = function (event) {
 	var searchedCity = searchInputEl.value.trim();
 
 	if (searchedCity) {
-		console.log(searchedCity);
+		// console.log(searchedCity);
 		getCityCoord(searchedCity);
+		recentSearches(searchedCity);
 	}
 };
 
@@ -126,7 +131,7 @@ var displayForecastWeather = function (forecasts) {
 
 	for (var i = 1; i < forecasts.length - 2; i++) {
 		// card container
-    var forecastCardEl = document.createElement("div");
+		var forecastCardEl = document.createElement("div");
 
 		forecastCardEl.classList = "col card border border-red";
 
@@ -157,26 +162,50 @@ var displayForecastWeather = function (forecasts) {
 		wicon.setAttribute("src", iconurl);
 
 		forecastCardEl.appendChild(wicon);
-	// Temp
-	var tempEl = document.createElement("li");
+		// Temp
+		var tempEl = document.createElement("li");
 
-	tempEl.textContent = "Temp: " + forecasts[i].temp.day + "F";
+		tempEl.textContent = "Temp: " + forecasts[i].temp.day + "F";
 
-	forecastCardEl.appendChild(tempEl);
+		forecastCardEl.appendChild(tempEl);
 
-	// humidity
-	var humidityEl = document.createElement("li");
+		// humidity
+		var humidityEl = document.createElement("li");
 
-	humidityEl.textContent = "Humidity: " + forecasts[i].humidity + "%";
+		humidityEl.textContent = "Humidity: " + forecasts[i].humidity + "%";
 
-	forecastCardEl.appendChild(humidityEl);
+		forecastCardEl.appendChild(humidityEl);
 
-	//wind speed
+		//wind speed
 
-    var windEl = document.createElement("li");
-    
-	windEl.textContent = "Wind: " + forecasts[i].wind_speed + " MPH";
+		var windEl = document.createElement("li");
 
-	forecastCardEl.appendChild(windEl);
+		windEl.textContent = "Wind: " + forecasts[i].wind_speed + " MPH";
+
+		forecastCardEl.appendChild(windEl);
 	}
+};
+
+var recentSearches = function (searchedCity) {
+  
+	cityHistory.push(searchedCity);
+
+	cityHistory.splice(6);
+	localStorage.setItem("city", JSON.stringify(cityHistory));
+
+  var historyEl = document.querySelector("#history-container");
+
+  historyEl.textContent = ""
+  
+  for (var i = 0; i < cityHistory.length; i++) {
+
+  var recentCity = document.createElement("button");
+
+	recentCity.classList = "btn btn-primary w-100 mb-2";
+
+	recentCity.textContent = cityHistory[i];
+
+	historyEl.appendChild(recentCity);
+  }
+
 };
