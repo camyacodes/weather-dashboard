@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+		rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/minty/bootstrap.min.css"
+	  />
+		<link
+			href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="./assets/css/style.css" />
+		<title>Weather Dashboard</title>
+	</head>
+	<body>
+		<header class="alert-primary text-center pt-2 pb-2">
+			<h1 class="text-white">Weather Dashboard</h1>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col-4">
+					<div class="card pb-3 search-card">
+						<form id="search-form">
+							<div class="form-group mb-3">
+								<label for="citySearch" id="label"></label>
+									<strong>Search for a City:</strong>
+								</label>
+								<input
+									type="input"
+									class="form-control"
+									id="citySearch"
+									placeholder="San Diego"
+								/>
+							</div>
+							<button type="submit" class="btn btn-primary w-100">
+								Search
+							</button>
+						</form>
+					</div>
+					<div id="history-container">
+					</div>
+				</div>
+				<div class="col-8">
+					<h1 id="cityName">
+						
+					</h1>
+					<div id="current-container">
+						<ul id="current-attributes">
+						</ul>
+					</div>
+					<div class="row" id="forecast-container">
+					</div>
+				</div>
+			</div>
+		</main>
+		<script src="./assets/js/script.js"></script>
+	</body>
+</html>
